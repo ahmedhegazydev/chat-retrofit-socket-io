@@ -1,6 +1,6 @@
-# News App ✔️
+# Chat App ✔️
 
-#### A simple News App 📱 built to demonstrate the use of modern android architecture component with MVVM Architecture 🏗
+#### A simple Chat App 📱 built to demonstrate the use of modern android architecture component and socket-io with MVVM Architecture 🏗
 
 The App is using the [News Api] to searching news.
 
@@ -30,7 +30,7 @@ The App is using the [News Api] to searching news.
    [MVVM (Model View View-Model)]: <https://developer.android.com/jetpack/guide#recommended-app-arch>
    [News Api]: <https://newsapi.org/>
    [Room]: <https://developer.android.com/training/data-storage/room/>
-   
+
 ### Project Architecture 🗼
 
 This app uses [MVVM (Model View View-Model)] architecture.
