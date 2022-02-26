@@ -1,14 +1,14 @@
-package com.kadirkuruca.newsapp.ui.login
+package com.kadirkuruca.newsapp.ui.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kadirkuruca.newsapp.data.local.ChatDao
 import com.kadirkuruca.newsapp.data.model.AllUsers
-import com.kadirkuruca.newsapp.data.model.NewsResponse
 import com.kadirkuruca.newsapp.data.model.SignInResponse
 import com.kadirkuruca.newsapp.data.model.SignUpResponse
-import com.kadirkuruca.newsapp.repository.NewsRepository
+import com.kadirkuruca.newsapp.repository.UserAuthRepository
 import com.kadirkuruca.newsapp.util.Resource
 import com.kadirkuruca.newsapp.util.hasInternetConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,32 +19,27 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class BreakingNewsViewModel @Inject constructor(
-    private val newsRepository: NewsRepository,
+class UserAuthViewModel @Inject constructor(
+    private val userAuthRepository: UserAuthRepository,
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    //    val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     val loginUser: MutableLiveData<Resource<SignInResponse>> = MutableLiveData()
     val registerUser: MutableLiveData<Resource<SignUpResponse>> = MutableLiveData()
     val allUsers: MutableLiveData<Resource<AllUsers>> = MutableLiveData()
 
-    var breakingNewsPage = 1
-    var breakingNewsResponse: NewsResponse? = null
-
     init {
-//        getBreakingNews("tr")
     }
 
     fun getLoginUser(queries: HashMap<String, String>) = viewModelScope.launch {
-        safeBreakingNewsCall(queries)
+        safeLoginUserCall(queries)
     }
 
-    private suspend fun safeBreakingNewsCall(queries: HashMap<String, String>) {
+    private suspend fun safeLoginUserCall(queries: HashMap<String, String>) {
         loginUser.postValue(Resource.Loading())
         try {
             if (hasInternetConnection(context)) {
-                val response = newsRepository.getLoginUser(queries)
+                val response = userAuthRepository.getLoginUser(queries)
                 loginUser.postValue(handleBreakingNewsResponse(response))
             } else {
                 loginUser.postValue(Resource.Error("No Internet Connection"))
@@ -60,15 +55,6 @@ class BreakingNewsViewModel @Inject constructor(
     private fun handleBreakingNewsResponse(response: Response<SignInResponse>): Resource<SignInResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-//                breakingNewsPage++
-//                if (breakingNewsResponse == null)
-//                    breakingNewsResponse = resultResponse
-//                else {
-//                    val oldArticles = breakingNewsResponse?.articles
-//                    val newArticles = resultResponse.articles
-//                    oldArticles?.addAll(newArticles)
-//                }
-//                return Resource.Success(breakingNewsResponse ?: resultResponse)
                 return Resource.Success(resultResponse)
             }
         }
@@ -78,15 +64,6 @@ class BreakingNewsViewModel @Inject constructor(
     private fun handleRegisterResponse(response: Response<SignUpResponse>): Resource<SignUpResponse> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-//                breakingNewsPage++
-//                if (breakingNewsResponse == null)
-//                    breakingNewsResponse = resultResponse
-//                else {
-//                    val oldArticles = breakingNewsResponse?.articles
-//                    val newArticles = resultResponse.articles
-//                    oldArticles?.addAll(newArticles)
-//                }
-//                return Resource.Success(breakingNewsResponse ?: resultResponse)
                 return Resource.Success(resultResponse)
             }
         }
@@ -96,15 +73,6 @@ class BreakingNewsViewModel @Inject constructor(
     private fun handleAllUsersResponse(response: Response<AllUsers>): Resource<AllUsers> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
-//                breakingNewsPage++
-//                if (breakingNewsResponse == null)
-//                    breakingNewsResponse = resultResponse
-//                else {
-//                    val oldArticles = breakingNewsResponse?.articles
-//                    val newArticles = resultResponse.articles
-//                    oldArticles?.addAll(newArticles)
-//                }
-//                return Resource.Success(breakingNewsResponse ?: resultResponse)
                 return Resource.Success(resultResponse)
             }
         }
@@ -112,8 +80,6 @@ class BreakingNewsViewModel @Inject constructor(
     }
 
     fun getRegisterUser(
-//        queries: HashMap<String, String>
-//        queries: HashMap<String, RequestBody>
         fullname: String,
         phone: String,
         password: String
@@ -121,8 +87,7 @@ class BreakingNewsViewModel @Inject constructor(
         registerUser.postValue(Resource.Loading())
         try {
             if (hasInternetConnection(context)) {
-                val response = newsRepository.getUserRegister(
-//                    queries
+                val response = userAuthRepository.getUserRegister(
                     fullname,
                     phone,
                     password
@@ -145,7 +110,7 @@ class BreakingNewsViewModel @Inject constructor(
         allUsers.postValue(Resource.Loading())
         try {
             if (hasInternetConnection(context)) {
-                val response = newsRepository.getAllUsers(
+                val response = userAuthRepository.getAllUsers(
                 )
                 allUsers.postValue(handleAllUsersResponse(response))
             } else {

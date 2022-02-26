@@ -1,4 +1,4 @@
-package com.kadirkuruca.newsapp.db
+package com.kadirkuruca.newsapp.data.local
 
 import  androidx.lifecycle.LiveData
 import androidx.room.*

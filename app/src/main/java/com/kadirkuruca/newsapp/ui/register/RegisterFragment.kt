@@ -13,18 +13,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.Socket
-import com.google.android.material.snackbar.Snackbar
 import com.kadirkuruca.newsapp.R
 import com.kadirkuruca.newsapp.data.model.SocketUser
-import com.kadirkuruca.newsapp.databinding.FragmentArticleBinding
+import com.kadirkuruca.newsapp.databinding.FragmentCreateAccountBinding
 import com.kadirkuruca.newsapp.network.SocketManager
-import com.kadirkuruca.newsapp.ui.login.BreakingNewsViewModel
+import com.kadirkuruca.newsapp.ui.viewmodel.UserAuthViewModel
 import com.kadirkuruca.newsapp.util.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_breaking_news.*
+import kotlinx.android.synthetic.main.fragment_create_account.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -34,51 +32,22 @@ import java.util.*
 private const val TAG = "RegisterFragment"
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment(R.layout.fragment_article) {
+class RegisterFragment : Fragment(R.layout.fragment_create_account) {
 
-//    private val viewModel: ArticleViewModel by viewModels()
-    private val viewModel: BreakingNewsViewModel by viewModels()
+    private val viewModel: UserAuthViewModel by viewModels()
     private var imageUser: String? = null
-    private lateinit var binding: FragmentArticleBinding
-    var isLoading = false
+    private lateinit var binding: FragmentCreateAccountBinding
+    private var isLoading = false
     private var mSocket: Socket? = null
     private var id = ""
     private val configUser by lazy {
         ConfigUser.getInstance(requireContext())!!
     }
-    private val map = HashMap<String, String>()
-//    private val map = HashMap<String, RequestBody>()
-
-    private val args by navArgs<ArticleFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         binding = FragmentArticleBinding.bind(view)
+        binding = FragmentCreateAccountBinding.bind(view)
 
-
-//        binding.apply {
-//            val register = args.register
-//            webView.apply {
-//                webViewClient = WebViewClient()
-//                register.url?.let {
-//                    loadUrl(register.url.toString())
-//                }
-//            }
-//
-//            fab.setOnClickListener {
-//                viewModel.saveArticle(register)
-//            }
-//        }
-
-//        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-//            viewModel.articleEvent.collect { event ->
-//                when (event) {
-//                    is ArticleViewModel.ArticleEvent.ShowArticleSavedMessage -> {
-//                        Snackbar.make(requireView(), event.message, Snackbar.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }
-//        }
 
         mSocket = SocketManager.getInstance(requireContext())!!.getSocket()
         mSocket!!.on(SING_UP, onSingUp)
@@ -98,11 +67,6 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
             var password = binding.txtPassword.text.toString()
             var password2 = binding.txtPassword2.text.toString()
 
-//            name = "Ahmed Mohamed"
-//            phone = "201222546345"
-//            password = "01156749640"
-//            password2 = "01156749640"
-
 
             when {
                 TextUtils.isEmpty(name) -> {
@@ -115,16 +79,6 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
                     binding.txtName.requestFocus()
                     return@setOnClickListener
                 }
-//                TextUtils.isEmpty(username) -> {
-//                    binding.txtUsername.error = getString(R.string.errorRequired)
-//                    binding.txtUsername.requestFocus()
-//                    return@setOnClickListener
-//                }
-//                !Patterns.EMAIL_ADDRESS.matcher(username).matches() -> {
-//                    binding.txtUsername.error = getString(R.string.email)
-//                    binding.txtUsername.requestFocus()
-//                    return@setOnClickListener
-//                }
                 TextUtils.isEmpty(phone) -> {
                     binding.txtPhone.error = getString(R.string.errorRequired)
                     binding.txtPhone.requestFocus()
@@ -140,11 +94,6 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
                     binding.txtPassword.requestFocus()
                     return@setOnClickListener
                 }
-//                password.length < 8 -> {
-//                    binding.txtPassword.error = getString(R.string.errorPasswordShort)
-//                    binding.txtPassword.requestFocus()
-//                    return@setOnClickListener
-//                }
                 TextUtils.isEmpty(password2) -> {
                     binding.txtPassword2.error = getString(R.string.errorRequired)
                     binding.txtPassword2.requestFocus()
@@ -155,14 +104,6 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
                     binding.txtPassword2.requestFocus()
                     return@setOnClickListener
                 }
-//                TextUtils.isEmpty(imageUser) -> {
-//                    Snackbar.make(
-//                        requireView(),
-//                        getString(R.string.errorImage),
-//                        Snackbar.LENGTH_LONG
-//                    ).show()
-//                    return@setOnClickListener
-//                }
                 else -> {
 
                     var name = binding.txtName.text.toString()
@@ -176,9 +117,9 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
                     user.put(SocketUser.ID, UUID.randomUUID().toString())
                     user.put(SocketUser.IMAGE, imageUser)
                     user.put(SocketUser.IS_ONLINE, false)
-//                        mSocket!!.emit(SING_UP, id, user)
+                    mSocket!!.emit(SING_UP, id, user)
 
-                    viewModel.getRegisterUser(name, phone, password)
+//                    viewModel.getRegisterUser(name, phone, password)
 
                 }
             }
@@ -198,7 +139,7 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
 
 
         viewModel.registerUser.observe(viewLifecycleOwner) {
-            when(it){
+            when (it) {
                 is Resource.Success -> {
                     paginationProgressBar.visibility = View.INVISIBLE
                     isLoading = false
@@ -222,7 +163,7 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
                         mSocket!!.emit(SING_UP, id, user)
 
 
-                        Log.e(TAG, "onViewCreated: " + newsResponse.token, )
+                        Log.e(TAG, "onViewCreated: " + newsResponse.token)
 //                        findNavController().navigate(
 //                            R.id.breakingNewsFragment
 //                        )
@@ -250,9 +191,6 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
             resultCode == Activity.RESULT_OK
         ) {
 
-//            if (!TextUtils.isEmpty(binding.txtUsername.text)) {
-//                binding.btnSave.isEnabled = true
-//            }
             if (!TextUtils.isEmpty(binding.txtPhone.text)) {
                 binding.btnSave.isEnabled = true
             }
@@ -285,9 +223,7 @@ class RegisterFragment : Fragment(R.layout.fragment_article) {
                     if (args[1].toString().toBoolean())
                         findNavController().navigateUp()
                     else {
-//                        mBinding.txtUsername.error = getString(R.string.errorEmail)
-//                        mBinding.txtUsername.requestFocus()
-                        binding.txtPhone.error = getString(R.string.errorPhone)
+                        binding.txtPhone.error = getString(R.string.errorPhoneRegistered)
                         binding.txtPhone.requestFocus()
                     }
                 }

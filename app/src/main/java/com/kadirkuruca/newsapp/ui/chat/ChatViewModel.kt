@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.kadirkuruca.newsapp.data.model.Message
-import com.kadirkuruca.newsapp.db.ChatDatabase
+import com.kadirkuruca.newsapp.data.local.ChatDatabase
 import com.kadirkuruca.newsapp.repository.ChatRepository
 import kotlinx.coroutines.launch
 

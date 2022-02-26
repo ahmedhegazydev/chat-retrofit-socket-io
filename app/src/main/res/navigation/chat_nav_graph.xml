@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/breakingNewsFragment"
-        android:name="com.kadirkuruca.newsapp.ui.login.BreakingNewsFragment"
+        android:name="com.kadirkuruca.newsapp.ui.login.LoginFragment"
         android:label="fragment_breaking_news"
-        tools:layout="@layout/fragment_breaking_news" >
+        tools:layout="@layout/fragment_user_login" >
         <action
             android:id="@+id/action_breakingNewsFragment_to_articleFragment"
             app:destination="@id/registerFragment"
@@ -20,12 +20,15 @@
         <action
             android:id="@+id/action_breakingNewsFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_breakingNewsFragment_to_savedNewsFragment"
+            app:destination="@id/listAllUsersFragment" />
     </fragment>
     <fragment
-        android:id="@+id/savedNewsFragment"
-        android:name="com.kadirkuruca.newsapp.ui.listAllUsers.SavedNewsFragment"
+        android:id="@+id/listAllUsersFragment"
+        android:name="com.kadirkuruca.newsapp.ui.listAllUsers.ListAllUsersFragment"
         android:label="fragment_saved_news"
-        tools:layout="@layout/fragment_saved_news" >
+        tools:layout="@layout/fragment_list_all_users" >
         <action
             android:id="@+id/action_savedNewsFragment_to_articleFragment"
             app:destination="@id/registerFragment"
@@ -35,26 +38,10 @@
             app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
-        android:id="@+id/searchNewsFragment"
-        android:name="com.kadirkuruca.newsapp.ui.searchnews.SearchNewsFragment"
-        android:label="fragment_search_news"
-        tools:layout="@layout/fragment_search_news">
-        <action
-            android:id="@+id/action_searchNewsFragment_to_articleFragment"
-            app:destination="@id/registerFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
-    </fragment>
-    <fragment
         android:id="@+id/registerFragment"
         android:name="com.kadirkuruca.newsapp.ui.register.RegisterFragment"
-        android:label="fragment_article"
-        tools:layout="@layout/fragment_article" >
-        <argument
-            android:name="article"
-            app:argType="com.kadirkuruca.newsapp.data.model.Article" />
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_create_account" >
     </fragment>
     <fragment
         android:id="@+id/chatFragment"

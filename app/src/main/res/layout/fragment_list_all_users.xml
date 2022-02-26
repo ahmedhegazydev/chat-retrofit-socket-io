@@ -4,13 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.listAllUsers.SavedNewsFragment">
+    tools:context=".ui.listAllUsers.ListAllUsersFragment">
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rvSavedNews"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcDataUser"
