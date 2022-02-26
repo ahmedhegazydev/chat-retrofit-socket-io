@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="write_message">Write message..</string>
+    <string name="save">save</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="sing_up">Sing Up</string>
+    <string name="you_do_not_have_an_account">You do not have an account,</string>
+    <string name="log_in">Log In</string>
+    <string name="password2">Confirm Password</string>
+    <string name="add_group">Add Group</string>
+    <string name="log_out">Log Out</string>
+    <string name="edit_password">Edit Password</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="errorRequired">This field is required</string>
+    <string name="errorImage">Image is required</string>
+    <string name="errorPassword">Password does not match</string>
+    <string name="errorEmail">Email is error</string>
+    <string name="errorPhone">Phone is error</string>
+    <string name="errorPasswordShort">The password is short</string>
+    <string name="errorNameShort">The Name is short</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="new_password">New Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+</resources>
