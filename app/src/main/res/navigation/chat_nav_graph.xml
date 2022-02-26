@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/breakingNewsFragment"
-        android:name="com.kadirkuruca.newsapp.ui.login.LoginFragment"
+        android:name="com.task.newsapp.ui.login.LoginFragment"
         android:label="fragment_breaking_news"
         tools:layout="@layout/fragment_user_login" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/listAllUsersFragment"
-        android:name="com.kadirkuruca.newsapp.ui.listAllUsers.ListAllUsersFragment"
+        android:name="com.task.newsapp.ui.listAllUsers.ListAllUsersFragment"
         android:label="fragment_saved_news"
         tools:layout="@layout/fragment_list_all_users" >
         <action
@@ -39,12 +39,12 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.kadirkuruca.newsapp.ui.register.RegisterFragment"
+        android:name="com.task.newsapp.ui.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_create_account" >
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.kadirkuruca.newsapp.ui.chat.ChatFragment"
+        android:name="com.task.newsapp.ui.chat.ChatFragment"
         android:label="ChatFragment" />
 </navigation>
